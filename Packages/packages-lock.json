@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.manakhovn.figma_to_unity_importer": {
+      "version": "https://github.com/ManakhovN/FigmaToUnityImporter.git?path=/Assets/FigmaImporter",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.textmeshpro": "2.1.4"
+      },
+      "hash": "1627fd8da41299b7a096594667f095909cfed80f"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.9",
       "depth": 1,
@@ -246,6 +255,25 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.unity.vectorgraphics": {
+      "version": "2.0.0-preview.20",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.2d.sprite": "1.0.0",
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.animation": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.physics": "1.0.0",
+        "com.unity.modules.physics2d": "1.0.0",
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.unitywebrequesttexture": "1.0.0",
+        "com.unity.modules.unitywebrequestwww": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.visualscripting": {
       "version": "1.8.0",
