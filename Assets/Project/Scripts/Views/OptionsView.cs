@@ -16,17 +16,28 @@ namespace TestTask_AnApp.Scripts.Views
         [Space]
         [SerializeField] private Options _options;
 
+        private void Start()
+        {
+            SetSoundActive(_options.IsSoundOn);
+            SetMusicActive(_options.IsMusicOn);
+        }
+
         public void SwitchSound()
         {
             var value = !_options.IsSoundOn;
             _options.IsSoundOn = value;
-            _soundSpriteHolder.sprite = value ? _soundOnSprite : _soundOffSprite;
+            SetSoundActive(value);
         }
         public void SwitchMusic()
         {
             var value = !_options.IsMusicOn;
             _options.IsMusicOn = value;
-            _musicSpriteHolder.sprite = value ? _musicOnSprite : _musicOffSprite;
+            SetMusicActive(value);
         }
+
+        private void SetSoundActive(bool value) =>
+            _soundSpriteHolder.sprite = value ? _soundOnSprite : _soundOffSprite;
+        private void SetMusicActive(bool value) =>
+            _musicSpriteHolder.sprite = value ? _musicOnSprite : _musicOffSprite;
     }
 }
