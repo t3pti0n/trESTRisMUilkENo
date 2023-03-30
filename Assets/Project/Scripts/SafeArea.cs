@@ -7,6 +7,9 @@ namespace TestTask_AnApp.Scripts
     {
         private RectTransform _rectTransform;
         private Canvas _canvas;
+        
+        private int _screenWidth; 
+        private int _screenHeight; 
 
         private void Awake()
         {
@@ -15,11 +18,17 @@ namespace TestTask_AnApp.Scripts
 
             if (_canvas == null)
                 throw new System.NullReferenceException("Canvas not found");
-        }  
+        }
 
-        private void Start()
+        private void Update()
         {
-            ResizeRectTransform();
+            if (Screen.width != _screenWidth || Screen.height != _screenHeight)
+            {
+                ResizeRectTransform();
+
+                _screenWidth = Screen.width;
+                _screenHeight = Screen.height;
+            }
         }
 
         private void ResizeRectTransform()

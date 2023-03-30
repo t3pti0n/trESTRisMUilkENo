@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TestTask_AnApp.Scripts.Abstractions;
 
 namespace TestTask_AnApp.Scripts.Views
@@ -10,13 +11,15 @@ namespace TestTask_AnApp.Scripts.Views
         [SerializeField] [Range(0f, 2f)] private float _animationTime;
         [SerializeField] [Range(0f, 3f)] private float _switchLevelsAnimationTime;
         [Space]
-        [SerializeField] private RectTransform _nextLevelsButton;
-        [SerializeField] private RectTransform _prevLevelsButton;
+        [SerializeField] private RectTransform _nextLevelsButtonTransform;
+        [SerializeField] private RectTransform _prevLevelsButtonTransform;
         [Space]
         [SerializeField] private Transform _levelsPanelsParent;
-        [SerializeField] private RectTransform[] _levelsPanels;
+        [SerializeField] private RectTransform[] _levelsPanelTransforms;
         [Space]
         [SerializeField] private int _defaultLevelsIndex;
+
+        private Button[] _buttons;
 
         private int _maxLevelsIndex;
         private int _currentLevelsIndex;
@@ -24,15 +27,17 @@ namespace TestTask_AnApp.Scripts.Views
 
         private void Awake()
         {
-            _maxLevelsIndex = _levelsPanels.Length - 1;
+            _maxLevelsIndex = _levelsPanelTransforms.Length - 1;
             _levelsView = this.GetComponent<CanvasGroup>();
+
+            _buttons = GetComponentsInChildren<Button>();
         }
 
         private void Start()
         {
-            var startPosition = _levelsPanels[0].position;
-            for (int i = 0; i < _levelsPanels.Length; i++)
-                _levelsPanels[i].position = startPosition + new Vector3(0, i * LEVELS_PANELS_DISTANCE, 0);
+            var startPosition = _levelsPanelTransforms[0].position;
+            for (int i = 0; i < _levelsPanelTransforms.Length; i++)
+                _levelsPanelTransforms[i].position = startPosition + new Vector3(0, i * LEVELS_PANELS_DISTANCE, 0);
 
             _levelsPanelsParent.position += new Vector3(0, _defaultLevelsIndex * LEVELS_PANELS_DISTANCE, 0);
             _currentLevelsIndex = _defaultLevelsIndex;
@@ -55,9 +60,15 @@ namespace TestTask_AnApp.Scripts.Views
         }
 
         private void SetNextButtonShow(bool isShown) =>
-            _nextLevelsButton.gameObject.SetActive(isShown);
+            _nextLevelsButtonTransform.gameObject.SetActive(isShown);
         private void SetPrevButtonShow(bool isShown) =>
-            _prevLevelsButton.gameObject.SetActive(isShown);
+            _prevLevelsButtonTransform.gameObject.SetActive(isShown);
+
+        private void SetButtonsActive(bool isActived)
+        {
+            foreach (var button in _buttons)
+                button.enabled = isActived;
+        }
 
         public void MoveToNextLevels() =>
             MoveTo(_currentLevelsIndex + 1);
@@ -66,10 +77,13 @@ namespace TestTask_AnApp.Scripts.Views
 
         private void MoveTo(int levelsIndex)
         {
+            SetButtonsActive(false);
+
             var position = new Vector3(0, (_currentLevelsIndex - levelsIndex) * LEVELS_PANELS_DISTANCE, 0) + _levelsPanelsParent.position;
             _levelsPanelsParent
                 .LeanMove(position, _switchLevelsAnimationTime)
-                .setEaseInOutQuint();
+                .setEaseInOutQuint()
+                .setOnComplete(() => SetButtonsActive(true));
             _currentLevelsIndex = levelsIndex;
 
             SetNextButtonShow(_currentLevelsIndex != _maxLevelsIndex);
