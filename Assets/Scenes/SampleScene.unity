@@ -13659,10 +13659,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animationTime: 0.5
   _switchLevelsAnimationTime: 1
-  _nextLevelsButton: {fileID: 396982848}
-  _prevLevelsButton: {fileID: 190462555}
+  _nextLevelsButtonTransform: {fileID: 396982848}
+  _prevLevelsButtonTransform: {fileID: 190462555}
   _levelsPanelsParent: {fileID: 427440239}
-  _levelsPanels:
+  _levelsPanelTransforms:
   - {fileID: 984745030}
   - {fileID: 1891171982}
   _defaultLevelsIndex: 0
