@@ -20,11 +20,11 @@ namespace TestTask_AnApp.Scripts.Views
         [Space]
         [SerializeField] private RectTransform _optionsPanel;
 
-        private CanvasGroup _optionsViewCanvasGroup;
+        private CanvasGroup _optionsView;
 
         private void Awake()
         {
-            _optionsViewCanvasGroup = this.GetComponent<CanvasGroup>();
+            _optionsView = this.GetComponent<CanvasGroup>();
         }
 
         private void Start()
@@ -50,12 +50,13 @@ namespace TestTask_AnApp.Scripts.Views
         {
             gameObject.SetActive(true);
 
-            _optionsViewCanvasGroup
+            _optionsView.alpha = 0;
+            _optionsView
                 .LeanAlpha(1, _animationTime);
         }
         public override void Hide()
         {
-            _optionsViewCanvasGroup
+            _optionsView
                 .LeanAlpha(0, _animationTime)
                 .setOnComplete(() => gameObject.SetActive(false));
         }
