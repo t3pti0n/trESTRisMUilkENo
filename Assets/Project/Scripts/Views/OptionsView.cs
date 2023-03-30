@@ -6,6 +6,8 @@ namespace TestTask_AnApp.Scripts.Views
 {
     public class OptionsView : ViewBase
     {
+        [SerializeField] [Range(0f, 1f)] private float _animationTime;
+        [Space]
         [SerializeField] private Sprite _soundOnSprite;
         [SerializeField] private Sprite _soundOffSprite;
         [SerializeField] private Sprite _musicOnSprite;
@@ -15,6 +17,15 @@ namespace TestTask_AnApp.Scripts.Views
         [SerializeField] private SVGImage _musicSpriteHolder;
         [Space]
         [SerializeField] private Options _options;
+        [Space]
+        [SerializeField] private RectTransform _optionsPanel;
+
+        private CanvasGroup _optionsViewCanvasGroup;
+
+        private void Awake()
+        {
+            _optionsViewCanvasGroup = this.GetComponent<CanvasGroup>();
+        }
 
         private void Start()
         {
@@ -33,6 +44,20 @@ namespace TestTask_AnApp.Scripts.Views
             var value = !_options.IsMusicOn;
             _options.IsMusicOn = value;
             SetMusicActive(value);
+        }
+
+        public override void Show()
+        {
+            gameObject.SetActive(true);
+
+            _optionsViewCanvasGroup
+                .LeanAlpha(1, _animationTime);
+        }
+        public override void Hide()
+        {
+            _optionsViewCanvasGroup
+                .LeanAlpha(0, _animationTime)
+                .setOnComplete(() => gameObject.SetActive(false));
         }
 
         private void SetSoundActive(bool value) =>
