@@ -9,7 +9,7 @@ namespace TestTask_AnApp.Scripts
 
         private int _value;
 
-        [SerializeField] [Range(MIN_VALUE, MAX_VALUE)] private int DefaultValue;
+        [SerializeField] [Range(MIN_VALUE, MAX_VALUE)] private int _defaultValue;
 
         public int Value
         {
@@ -21,6 +21,11 @@ namespace TestTask_AnApp.Scripts
             }
         }
 
-        public System.Action<int> OnValueChange { get; }
+        public System.Action<int> OnValueChange;
+
+        private void Start()
+        {
+            Value = _defaultValue;
+        }
     }
 }
